@@ -1,0 +1,21 @@
+.auth-form__button {
+    font-size: 18px;
+    font-weight: 400;
+    color: #000;
+    width: 100%;
+    height: 50px;
+    border-radius: 2px;
+    border: none;
+    margin-top: 186px;
+  }
+  
+  .auth-form__button:hover {
+    cursor: pointer;
+  }
+  
+  @media screen and (max-width: 440px) {
+    .auth-form__button {
+      font-size: 16px;
+      margin-top: 143px;
+    }
+  }

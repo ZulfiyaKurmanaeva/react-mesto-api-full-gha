@@ -1,0 +1,6 @@
+.elements__item {
+   border-radius: 10px;
+   background-color: #FFF;
+   position: relative;
+   overflow: hidden;
+}

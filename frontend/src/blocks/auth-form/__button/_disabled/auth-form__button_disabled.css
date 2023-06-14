@@ -1,0 +1,11 @@
+.auth-form__button_disabled {
+    opacity: .2;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+  }
+  
+  .auth-form__button_disabled:hover {
+    background-color: transparent;
+    cursor: default;
+  }

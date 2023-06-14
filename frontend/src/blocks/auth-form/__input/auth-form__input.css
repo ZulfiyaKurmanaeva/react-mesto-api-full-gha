@@ -1,0 +1,33 @@
+.auth-form__input {
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0 0 13px 0;
+    width: 100%;
+  }
+
+  .auth-form__input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 48px #C0C0C0 inset;
+    
+  }
+
+  ::-webkit-input-placeholder {
+    color: #b1b1b7;
+  }
+  
+  .auth-form__input:first-of-type {
+    margin: 50px 0 0px 0;
+  } 
+  
+  .auth-form__input:focus {
+    outline: none;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .auth-form__input:first-of-type {
+      margin: 40px 0 0px 0;
+    } 
+  }

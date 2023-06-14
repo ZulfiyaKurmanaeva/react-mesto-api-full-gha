@@ -1,0 +1,59 @@
+{
+  "name": "react-mesto-auth",
+  "version": "0.1.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://zulfiyakurmanaeva.github.io/react-mesto-auth.git"
+  },
+  "homepage": "https://zulfiyakurmanaeva.github.io/react-mesto-auth/",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "body-parser": "^1.20.2",
+    "bootstrap": "^5.2.3",
+    "express": "^4.18.2",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.4",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.1",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start nodemon index.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0",
+    "nodemon": "^2.0.22"
+  },
+  "description": "Веб-проект «Mesto» Веб-сайт «Mesto» был разработан в рамках курса «Веб-разработчик» учебного центра «Яндекс-Практикум». Сайт создан для любителей путешествий и разработан таким образом, что любой посетитель может в нем зарегистрироваться и размщать фотографии впечатливших его мест. В конструкции сайта реализована адаптивная верстка, которая, отображает его содержание как на экране компьютера, так и мобильного телефона в удобной для пользователя форме. При построении файловой структуры сайта использована методология БЭМ. Соответствующие семантические теги использованы для оформления заголовков, ссылок, абзацев и других элементов сайта. Динамический интерфей сайти, реализованный с помощью языка JavaScript, позволяет посетитею зарегистрироваться в Личном кабинете и размещать свои фотографии. Сайт доступен по ссылке: https://zulfiyakurmanaeva.github.io/react-mesto-auth/index.html",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
