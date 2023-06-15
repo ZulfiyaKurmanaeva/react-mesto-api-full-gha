@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "repository": {
-    "type": "git",
-    "url": "git+https://zulfiyakurmanaeva.github.io/react-mesto-auth.git"
+    "type": "git"    
   },
-  "homepage": "https://zulfiyakurmanaeva.github.io/react-mesto-auth/",
+  "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
