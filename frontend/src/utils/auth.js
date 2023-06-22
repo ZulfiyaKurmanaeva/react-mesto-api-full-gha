@@ -1,4 +1,4 @@
-export const baseUrl = "http://localhost:3000";
+export const baseUrl = "https://unos.nomoredomains.rocks";
 
 export function register(password, email) {
     return fetch(`${baseUrl}/signup`, {
