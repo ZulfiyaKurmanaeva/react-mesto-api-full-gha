@@ -10,7 +10,6 @@ const PopupWithForm = React.forwardRef(
       isOpen,
       onClose,
       onOverlayClick,
-      onTransitionEnd,
       onSubmit,
       onLoading,
       isValid,
@@ -21,8 +20,7 @@ const PopupWithForm = React.forwardRef(
     return (
       <div
         className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}
-        onClick={onOverlayClick}
-        onTransitionEnd={onTransitionEnd}
+        onClick={onOverlayClick}        
       >
         <div className="popup__container">
           <form

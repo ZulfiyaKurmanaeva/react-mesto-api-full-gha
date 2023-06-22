@@ -1,7 +1,6 @@
 class Api {
     constructor(config) {
-        this._url = config.url;
-        this._headers = config.headers;
+        this._url = config.url;       
     }
 
     _getResponse(res) {
@@ -16,9 +15,13 @@ class Api {
     }
 
     createCard(data) {
+        const token = localStorage.getItem('jwt');
         return this._request(`${this._url}/cards`, {
             method: 'POST',
-            headers: this._headers,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 name: data.name,
                 link: data.link
@@ -27,49 +30,77 @@ class Api {
     }
 
     deleteCard(id) {
+        const token = localStorage.getItem('jwt');
         return this._request(`${this._url}/cards/${id}`, {
             method: 'DELETE',
-            headers: this._headers,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         })
     }
 
     getInitialCards() {
+        const token = localStorage.getItem('jwt');
         return this._request(`${this._url}/cards`, {
-            headers: this._headers,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         });
     }
 
     changeLikeCardStatus(id, isLiked) {
+        const token = localStorage.getItem('jwt');
         return this._request(`${this._url}/cards/${id}/likes`, {
             method: isLiked ? "DELETE" : "PUT",
-            headers: this._headers,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         })
     }
 
     putLike(id) {
+        const token = localStorage.getItem('jwt');
         return this._request(`${this._baseUrl}/cards/${id}/likes`, {
             method: "PUT",
-            headers: this._headers,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         });
     }
 
     deleteLike(id) {
+        const token = localStorage.getItem('jwt');
         return this._request(`${this._baseUrl}/cards/${id}/likes`, {
             method: "DELETE",
-            headers: this._headers,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         });
     }
 
     getUserInfo() {
+        const token = localStorage.getItem('jwt');
         return this._request(`${this._url}/users/me`, {
-            headers: this._headers
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         })
     }
 
     setUserInfo(data) {
+        const token = localStorage.getItem('jwt');
         return this._request(`${this._url}/users/me`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 name: data.name,
                 about: data.about
@@ -78,9 +109,13 @@ class Api {
     }
 
     setUserAvatar(data) {
+        const token = localStorage.getItem('jwt');
         return this._request(`${this._url}/users/me/avatar`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 avatar: data.avatar
             })
@@ -89,11 +124,7 @@ class Api {
 }
 
 const api = new Api({
-    url: 'https://mesto.nomoreparties.co/v1/cohort-61',
-    headers: {
-        Authorization: '367c1fcc-88ca-4868-a883-495290cf987f',
-        'Content-Type': 'application/json'
-    }
+    url: 'http://localhost:3000',    
 });
 
 export default api;

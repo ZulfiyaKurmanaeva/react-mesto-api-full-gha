@@ -1,4 +1,4 @@
-export const baseUrl = "https://auth.nomoreparties.co";
+export const baseUrl = "http://localhost:3000";
 
 export function register(password, email) {
     return fetch(`${baseUrl}/signup`, {
@@ -17,10 +17,11 @@ export function authorize(password, email) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ password, email }),
-    }).then(checkResponse);
+    }).then(checkResponse);   
 };
 
-export function getContent(token) {
+export function getContent() {
+    const token = localStorage.getItem('jwt');
     return fetch(`${baseUrl}/users/me`, {
         method: "GET",
         headers: {

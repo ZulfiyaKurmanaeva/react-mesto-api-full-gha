@@ -1,5 +1,7 @@
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+const { NODE_ENV, JWT_SECRET } = process.env;
+const bcrypt = require('bcryptjs');
 
 const userSchema = require('../models/user');
 
@@ -20,11 +22,14 @@ const getUsers = (req, res, next) => {
 
 const getUserById = (req, res, next) => {
   const { userId } = req.params;
-
   userSchema
     .findById(userId)
-    .orFail(new NotFoundError('Пользователь по указанному _id не найден.'))
-    .then((user) => res.send({ data: user }))
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError('Пользователь не найден.');
+      }
+      res.send({ data: user });
+    })
     .catch((err) => {
       if (err.name === 'CastError') {
         return next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
@@ -34,13 +39,19 @@ const getUserById = (req, res, next) => {
 };
 
 const getUser = (req, res, next) => {
-  userSchema
-    .findById(req.user._id)
-    .orFail(new NotFoundError('Пользователь не найден.'))
-    .then((user) => res.status(200).send(user))
+  userSchema.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError('Пользователь не найден.');
+      }
+      res.status(200)
+        .send(user);
+    })
     .catch((err) => {
       if (err.name === 'CastError') {
         next(BadRequestError('Переданы некорректные данные'));
+      } else if (err.message === 'NotFound') {
+        next(new NotFoundError('Пользователь не найден.'));
       } else {
         next(err);
       }
@@ -67,17 +78,14 @@ const createUser = (req, res, next) => {
           password: hash,
         })
         .then(() => res.status(201)
-          .send(
-            {
-              data: {
-                name,
-                about,
-                avatar,
-                email,
-              },
+          .send({
+            data: {
+              name,
+              about,
+              avatar,
+              email,
             },
-          ))
-        .catch((err) => {
+          })).catch((err) => {
           if (err.code === 11000) {
             return next(new MongoDuplicateKeyError('Пользователь с таким email уже существует'));
           }
@@ -112,7 +120,7 @@ const updateUser = (req, res, next) => {
     .then((user) => res.status(200)
       .send(user))
     .catch((err) => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
+      if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
       }
       return next(err);
@@ -135,7 +143,7 @@ const updateAvatar = (req, res, next) => {
     .then((user) => res.status(200)
       .send(user))
     .catch((err) => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
+      if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при обновлении аватара'));
       }
       return next(err);
@@ -148,8 +156,8 @@ const login = (req, res, next) => {
   return userSchema
     .findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'JWT-secret', { expiresIn: '7d' });
-      res.send({ token });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'JWT-token', { expiresIn: '7d' });
+      res.status(200).send({ token });
     })
     .catch(next);
 };

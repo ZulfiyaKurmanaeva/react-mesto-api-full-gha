@@ -47,226 +47,201 @@ function App() {
     isImagePopupOpen ||
     isInfoTooltipOpen;
 
-  /*handle userinfo*/
-  useEffect(() => {
-    if (loggedIn === true) {
-      navigate("/");
-    }
-  }, [loggedIn, navigate]);
-
-  useEffect(() => {
-    if (loggedIn) {
-      api.getUserInfo()
-        .then((userInfo) => {
-          setCurrentUser(userInfo);
-        })
-        .catch((err) => console.log(err));
-
-      api.getInitialCards()
-        .then((cardList) => {
-          setCards(cardList);
-        })
-        .catch((err) => console.log(err));
-
-    }
-  }, [loggedIn]);
-
-  function handleUpdateUser(newUserInfo) {
-    setIsLoading(true);
-    api.setUserInfo(newUserInfo)
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
-  }
-
-  function handleUpdateAvatar(newUserAvatar) {
-    setIsLoading(true);
-    api.setUserAvatar(newUserAvatar)
-      .then((data) => {
-        setCurrentUser(data);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }
-
-  /*handle tokencheck*/
-
-  useEffect(() => {
-    handleTokenCheck()
-    return () => { }
-  }, [])
-
-  function handleTokenCheck() {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      return;
-    }
-
-    auth
-      .getContent(token)
-      .then((res) => {
-        if (res) {
-          setLoggedIn(true);
-          handleLogin(res.data.email);
-          navigate("/");
+    useEffect(() => {
+        if (loggedIn) {
+          Promise.all([api.getUserInfo(), api.getInitialCards()])
+            .then((res) => {
+              const [userInfo, cardList] = res;
+              setCurrentUser(userInfo);
+              setCards(cardList);
+            })
+            .catch((err) => console.log(err));
         }
-      })
-      .catch((err) => console.log(err));
+      }, [loggedIn]);
 
-  }
+      useEffect(() => {
+        handleTokenCheck()
+        return () => { }
+      }, [])
 
-  /*handle authorization*/
-
-  function handleRegistration(password, email) {
-    setIsLoading(true);
-    auth
-      .register(password, email)
-      .then(() => {
-        navigate("/sign-in");
-        setRegistered(true);
-        setTooltipImage(resolve);
-        setTooltipTitle("Вы успешно зарегистрировались!");
-      })
-      .catch((err) => {
-        setRegistered(false);
-        setTooltipImage(reject);
-        setTooltipTitle("Что-то пошло не так! Попробуйте ещё раз.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-        handleTooltipOpen();
-      });
-  }
-
-  function handleLogin(email) {
-    setUserEmail(email);
-    setLoggedIn(true);
-  }
-
-  function handleLoginSubmit(password, email) {
-    setIsLoading(true);
-    auth
-      .authorize(password, email)
-      .then((data) => {
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          handleLogin(email);
-          navigate("/");
+      function handleTokenCheck() {
+        const token = localStorage.getItem("jwt");
+        if (!token) {
+          return;
         }
-      })
-      .catch((err) => {
-        console.log(err);
-        handleTooltipOpen();
-        setTooltipImage(reject);
-        setTooltipTitle("Что-то пошло не так! Попробуйте ещё раз.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }
+    
+        auth
+          .getContent(token)
+          .then((res) => {
+            if (res) {
+              setLoggedIn(true);
+              setUserEmail(res.email);
+              navigate("/");
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+     
+      function handleLoginSubmit(password, email) {
+        setIsLoading(true);
+        auth
+          .authorize(password, email)
+          .then((data) => {
+            if (data.token) {
+              localStorage.setItem("jwt", data.token);
+              setUserEmail(email);
+              setLoggedIn(true);
+              navigate("/");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            handleTooltipOpen();
+            setTooltipImage(reject);
+            setTooltipTitle("Что-то пошло не так! Попробуйте ещё раз.");
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      }
 
-  function handleLogout() {
-    localStorage.removeItem("token");
-    setLoggedIn(false);
-    setUserEmail("");
-  }
+      function handleRegistration(password, email) {
+        setIsLoading(true);
+        auth
+          .register(password, email)
+          .then(() => {
+            navigate("/sign-in");
+            setRegistered(true);
+            setTooltipImage(resolve);
+            setTooltipTitle("Вы успешно зарегистрировались!");
+          })
+          .catch((err) => {
+            setRegistered(false);
+            setTooltipImage(reject);
+            setTooltipTitle("Что-то пошло не так! Попробуйте ещё раз.");
+          })
+          .finally(() => {
+            setIsLoading(false);
+           handleTooltipOpen();
+          });
+      }
+
+      function handleLogout() {
+        localStorage.removeItem("jwt");
+        setLoggedIn(false);
+        setUserEmail("");
+      }
+
+      function handleUpdateUser(newUserInfo) {
+        setIsLoading(true);
+        api.setUserInfo(newUserInfo)
+          .then((data) => {
+            setCurrentUser(data);
+            closeAllPopups();
+          })
+          .catch((err) => console.log(err))
+          .finally(() => setIsLoading(false));
+      }
+
+      function handleUpdateAvatar(newUserAvatar) {
+        setIsLoading(true);
+        api.setUserAvatar(newUserAvatar)
+          .then((data) => {
+            setCurrentUser(data);
+            closeAllPopups();
+          })
+          .catch((err) => console.log(err))
+          .finally(() => {
+            setIsLoading(false);
+          });
+      }
+
+      function handleAddPlaceSubmit(newCard) {
+        setIsLoading(true);
+        api.createCard(newCard)
+          .then((card) => {
+            setCards([card, ...cards]);
+            closeAllPopups();
+          })
+          .catch((err) => console.log(err))
+          .finally(() => {
+            setIsLoading(false);
+          });
+      }
+
+      function handleCardLike(card) {
+        const isLiked = card.likes.some((like) => like === currentUser._id);
+        api.changeLikeCardStatus(card.id, isLiked)
+          .then((newCard) => {
+            setCards((state) =>
+              state.map((c) => (c._id === card.id ? newCard : c))
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+      function handleCardImageClick(card) {
+        setIsImagePopupOpen(true);
+        setSelectedCard(card);
+      }
+
+      function handleCardDeleteClick(card) {
+        setIsConfirmPopupOpen(true);
+        setSelectedCard(card);
+      }    
+     
+      function handleCardDelete(card) {
+        const isOwn = card.owner === currentUser._id;
+        setIsLoading(true);
+    
+        if (isOwn) {
+          api
+            .deleteCard(card.id)
+            .then(() => {
+              setCards((state) => state.filter((item) => item._id !== card.id));
+              closeAllPopups();
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+            .finally(() => setIsLoading(false));
+        }
+      }
+
+      function closeAllPopups() {
+        setIsEditProfilePopupOpen(false);
+        setIsAddPlacePopupOpen(false);
+        setIsEditAvatarPopupOpen(false);
+        setIsImagePopupOpen(false);
+        setIsConfirmPopupOpen(false);
+        setIsInfoTooltipOpen(false);
+      }
+    
+      const handleEscClose = useCallback((evt) => {
+        if (evt.key === 'Escape') {
+          closeAllPopups();
+        }
+      }, []);
+
+      useEffect(() => {
+        if (isPopupOpen) {
+          document.addEventListener('keydown', handleEscClose);
+          return () => {
+            document.removeEventListener('keydown', handleEscClose);
+          }
+        }
+      }, [isPopupOpen, handleEscClose]);
+    
+      function closeOnOverlayClick(e) {
+        if (e.target === e.currentTarget) {
+          closeAllPopups();
+        }
+      } 
 
   function handleTooltipOpen() {
     setIsInfoTooltipOpen(true);
-  }
-
-  /*handle card close */
-
-  function closeAllPopups() {
-    setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    setIsImagePopupOpen(false);
-    setIsConfirmPopupOpen(false);
-    setIsInfoTooltipOpen(false);
-  }
-
-  const handleEscClose = useCallback((evt) => {
-    if (evt.key === 'Escape') {
-      closeAllPopups();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isPopupOpen) {
-      document.addEventListener('keydown', handleEscClose);
-      return () => {
-        document.removeEventListener('keydown', handleEscClose);
-      }
-    }
-  }, [isPopupOpen, handleEscClose]);
-
-  function closeOnOverlayClick(e) {
-    if (e.target === e.currentTarget) {
-      closeAllPopups();
-    }
-  }
-
-  /*handle card click/like/delete*/
-
-  function handleAddPlaceSubmit(newCard) {
-    setIsLoading(true);
-    api.createCard(newCard)
-      .then((card) => {
-        setCards([card, ...cards]);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }
-
-  function handleCardDeleteClick(card) {
-    setIsConfirmPopupOpen(true);
-    setSelectedCard(card);
-  }
-
-  function handleCardImageClick(card) {
-    setIsImagePopupOpen(true);
-    setSelectedCard(card);
-  }
-
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((like) => like._id === currentUser._id);
-    api.changeLikeCardStatus(card.id, isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card.id ? newCard : c))
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function handleCardDelete(card) {
-    const isOwn = card.owner._id === currentUser._id;
-    setIsLoading(true);
-
-    if (isOwn) {
-      api
-        .deleteCard(card.id)
-        .then(() => {
-          setCards((state) => state.filter((item) => item._id !== card.id));
-          closeAllPopups();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => setIsLoading(false));
-    }
   }
 
   return (
@@ -352,7 +327,7 @@ function App() {
             card={selectedCard}
             isOpen={isImagePopupOpen}
             onClose={closeAllPopups}
-            onOverlayClick={closeOnOverlayClick}
+            onOverlayClick={closeOnOverlayClick}            
           />
 
           <DeleteCardPopup
@@ -371,7 +346,7 @@ function App() {
             tooltipTitle={tooltipTitle}
             registered={registered}
             onClose={closeAllPopups}
-            onOverlayClick={closeOnOverlayClick}
+            onOverlayClick={closeOnOverlayClick}           
           />
         </div>
       </div>

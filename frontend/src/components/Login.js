@@ -25,7 +25,7 @@ function Login({ onSubmit, onLoading }) {
             onSubmit(password, email);
         }
     }
-
+   
     return (
         <AuthForm
             title="Вход"
