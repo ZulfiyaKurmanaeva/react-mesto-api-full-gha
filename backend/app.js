@@ -23,7 +23,7 @@ app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
 
-app.get('/crash-test', () => {
+app.get('pm', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
