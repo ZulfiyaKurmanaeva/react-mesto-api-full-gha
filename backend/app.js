@@ -22,6 +22,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
+app.use(helmet());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limiter);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -32,20 +41,12 @@ app.get('/crash-test', () => {
 app.post('/signup', validationCreateUser, createUser);
 app.post('/signin', validationLogin, login);
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-
 app.use(auth);
 app.use(limiter);
 
 app.use('/', router);
 app.use(errorLogger);
 app.use(errors());
-app.use(helmet());
 app.use(handleError);
 
 const { MONGO_DB, PORT } = require('./config');

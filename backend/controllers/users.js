@@ -16,8 +16,7 @@ const saltRounds = 10;
 const getUsers = (req, res, next) => {
   userSchema
     .find({})
-    .then((users) => res.status(200)
-      .send(users))
+    .then((users) => res.send(users))
     .catch(next);
 };
 
