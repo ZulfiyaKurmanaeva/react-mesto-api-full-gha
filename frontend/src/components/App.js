@@ -71,7 +71,7 @@ function App() {
         }
     
         auth
-          .getContent(token)
+          .checkToken(token)
           .then((res) => {
             if (res) {
               setLoggedIn(true);
@@ -85,7 +85,7 @@ function App() {
       function handleLoginSubmit(password, email) {
         setIsLoading(true);
         auth
-          .authorize(password, email)
+          .login(password, email)
           .then((data) => {
             if (data.token) {
               localStorage.setItem("jwt", data.token);

@@ -10,17 +10,18 @@ export function register(password, email) {
     }).then(checkResponse);
 };
 
-export function authorize(password, email) {
+export function login(password, email) {
     return fetch(`${baseUrl}/signin`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ password, email }),
-    }).then(checkResponse);   
+    }).then(checkResponse)
+    
 };
 
-export function getContent() {
+export function checkToken() {
     const token = localStorage.getItem('jwt');
     return fetch(`${baseUrl}/users/me`, {
         method: "GET",

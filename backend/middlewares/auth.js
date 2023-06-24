@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const NotAuthError = require('../errors/NotAuthError');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { secret } = require('../config');
 
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
@@ -14,7 +14,7 @@ const auth = (req, res, next) => {
   const token = authorization.replace('Bearer ', '');
 
   try {
-    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'JWT-token');
+    payload = jwt.verify(token, secret, { expiresIn: '7d' });
   } catch (err) {
     return next(new NotAuthError('Пройдите авторизацию!'));
   }

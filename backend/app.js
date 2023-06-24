@@ -48,8 +48,8 @@ app.use(errors());
 app.use(helmet());
 app.use(handleError);
 
-const MONGO_DB = 'mongodb://127.0.0.1:27017/mestodb';
-const { PORT = 3000 } = process.env;
+const { MONGO_DB, PORT } = require('./config');
+
 mongoose.connect(MONGO_DB);
 
 async function start() {
