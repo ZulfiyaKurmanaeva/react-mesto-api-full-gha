@@ -1,14 +1,28 @@
-# react-mesto-api-full
-Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. Бэкенд расположите в директории `backend/`, а фронтенд - в `frontend/`. 
-  
-Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
-
-Адрес репозитория: https://github.com/ZulfiyaKurmanaeva/react-mesto-api-full-gha.git
-
-## Ссылки на проект
-
-IP 158.160.72.175
-
-Frontend https://uno.nomoredomains.rocks/
-
-Backend https://unos.nomoredomains.rocks/
+<h1 align="center">Mesto</h1>
+<table border="1">
+ <tr>
+    <td>
+      <p><strong>An application where users can share photos of their favorite places.</strong></p>
+      <p>Tools: Html, CSS, JavaScript, Webpack</p>
+      <p>An application where users can share photos of their favorite places.</p>
+      <p>The project has the following functions: </p>
+      <ul>
+        <li>Layout according to BEM methodology;</li>
+        <li>Adaptability at different resolutions, including breakpoints;</li>
+        <li>Using grid and flex technologies;</li>
+        <li>User authorization and registration, editing user data;</li>
+        <li>Adding and deleting photos and likes;</li>        
+      </ul>
+      <p>The result <a href="https://uno.nomoredomains.rocks/" target="_blank">here</a> or you can click on the image on the right.</p>
+      <p>***</p>
+      <p><strong>Приложение, в котором пользователи могут делиться фотографиями своих любимых локаций.</strong></p>
+      <p>Функционал: авторизации и регистрации пользователей, редактирование аватара и профиля, добавление и удаление фотографии и лайков, отражение количества лайков.</p>
+      <p>Стек: HTML5, CSS3, JavaScript, Webpack.</p>
+      <p><a href="https://uno.nomoredomains.rocks/" target="_blank">Ссылка на сайт</a></p>
+    </td>
+    <td>
+      <p>Click preview</p>
+      <a href="https://uno.nomoredomains.rocks/"><img src="./frontend/src/images/mesto.jpg" alt="Mesto preview"></a>
+    </td>
+  </tr>
+</table>
