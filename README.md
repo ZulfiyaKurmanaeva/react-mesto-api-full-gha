@@ -22,7 +22,7 @@
     </td>
     <td>
       <p>Click preview</p>
-      <a href="https://uno.nomoredomains.rocks/"><img src="./frontend/src/images/mesto.jpg" alt="Mesto preview"></a>
+      <a href="https://uno.nomoredomains.rocks/"><img src="./frontend/src/images/rmImage.JPG" alt="Mesto preview"></a>
     </td>
   </tr>
 </table>
