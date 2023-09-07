@@ -17,8 +17,7 @@
       <p><strong>Приложение, в котором пользователи могут делиться фотографиями своих любимых локаций.</strong></p>
       <p>Функционал: авторизации и регистрации пользователей, редактирование аватара и профиля, добавление и удаление фотографии и лайков, отражение количества лайков.</p>
       <p>Стек: HTML5, CSS3, JavaScript, Webpack.</p>
-      <p><a href="https://uno.nomoredomains.rocks/" target="_blank">Ссылка на сайт</a></p>
-      :
+      <p><a href="https://uno.nomoredomains.rocks/" target="_blank">Ссылка на сайт</a></p>      
     </td>
     <td>
       <p>Click preview</p>
