@@ -3,7 +3,7 @@
  <tr>
     <td>
       <p><strong>An application where users can share photos of their favorite places.</strong></p>
-      <p>Tools: Html, CSS, JavaScript, Webpack</p>
+      <p>Tools: React, JavaScript,  Html, CSS, Webpack.</p>
       <p>The project has the following functions: </p>
       <ul>
         <li>Layout according to BEM methodology;</li>
@@ -16,7 +16,7 @@
       <p>***</p>
       <p><strong>Приложение, в котором пользователи могут делиться фотографиями своих любимых локаций.</strong></p>
       <p>Функционал: авторизации и регистрации пользователей, редактирование аватара и профиля, добавление и удаление фотографии и лайков, отражение количества лайков.</p>
-      <p>Стек: HTML5, CSS3, JavaScript, Webpack.</p>
+      <p>Стек: React, JavaScript,  Html, CSS, Webpack.</p>
       <p><a href="https://uno.nomoredomains.rocks/" target="_blank">Ссылка на сайт</a></p>      
     </td>
     <td>
